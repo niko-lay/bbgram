@@ -195,7 +195,12 @@ Page {
             imageSource: "asset:///images/menu_phone.png"
             ActionBar.placement: ActionBarPlacement.InOverflow
             onTriggered: {
-                _owner.dialANumber("+" + peer.phone)
+                if (peer.phone.length === 0){
+                    toastNoPhone.show()
+                }
+                else{
+                    _owner.dialANumber("+" + peer.phone)
+                }
             }
         },
         ActionItem {
@@ -294,6 +299,11 @@ Page {
     }
     
     attachedObjects: [
+        SystemToast {
+            id: toastNoPhone
+            body: "Phone number not avaliable"
+            onFinished: {}
+        },
         TitleTextStyleDefinition {
             id: titleTextStyle
             fontSize: FontSize.Large
